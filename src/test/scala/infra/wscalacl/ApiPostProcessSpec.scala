@@ -19,7 +19,7 @@ class ApiPostProcessSpec extends Specification {
     case class OkResp(num: Int) extends Codomain
     case class ErrResp(reason: String) extends Throwable with Codomain
 
-    val errR = ApiPostProcess[String,Codomain]((s: String) => s match {
+    val errR = ApiPostProcess((s: String) => s match {
       case "err" => Some(ErrResp("it's an error"))
       case _ => None
     })

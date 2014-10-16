@@ -14,7 +14,7 @@ import scala.util.{Success, Failure, Try}
  * @tparam R response type
  * @tparam C codomain
  */
-case class ApiPostProcess[R,C](parseError: R => Option[C with Throwable], parseSuccess: R => C) extends (R => Try[C]) {
+case class ApiPostProcess[R,C](parseError: R => Option[Throwable], parseSuccess: R => C) extends (R => Try[C]) {
   /**
    * Actually process response (either error or success)
    * @param resp processed response
@@ -40,8 +40,8 @@ case class ApiPostProcess[R,C](parseError: R => Option[C with Throwable], parseS
 }
 
 object ApiPostProcess {
-  case class ParseError[R,C](parseError: R => Option[C with Throwable]) {
-    def apply[CC >: C](parseSuccess: R => CC): ApiPostProcess[R, CC] = ApiPostProcess(parseError, parseSuccess)
+  case class ParseError[R](parseError: R => Option[Throwable]) {
+    def apply[ C](parseSuccess: R => C) = ApiPostProcess(parseError, parseSuccess)
   }
 
   /**
@@ -51,5 +51,5 @@ object ApiPostProcess {
    * @tparam C API codomain
    * @return
    */
-  def apply[R, C](parseError: R => Option[C with Throwable]) = ParseError(parseError)
+  def apply[R, C](parseError: R => Option[Throwable]) = ParseError(parseError)
 }
