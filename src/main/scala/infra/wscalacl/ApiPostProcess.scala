@@ -41,7 +41,7 @@ case class ApiPostProcess[R,C](parseError: R => Option[C with Throwable], parseS
 
 object ApiPostProcess {
   case class ParseError[R,C](parseError: R => Option[C with Throwable]) {
-    def apply[CC >: C](parseSuccess: R => C): ApiPostProcess[R, CC] = ApiPostProcess(parseError, parseSuccess)
+    def apply[CC >: C](parseSuccess: R => CC): ApiPostProcess[R, CC] = ApiPostProcess(parseError, parseSuccess)
   }
 
   /**
