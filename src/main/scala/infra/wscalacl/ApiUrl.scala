@@ -1,4 +1,4 @@
-package infra.ws
+package infra.wscalacl
 
 import java.net.URLEncoder
 

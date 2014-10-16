@@ -1,4 +1,4 @@
-package infra.ws
+package infra.wscalacl
 
 import org.specs2.mutable.Specification
 
