@@ -40,6 +40,10 @@ case class ApiPostProcess[R,C](parseError: R => Option[C with Throwable], parseS
 }
 
 object ApiPostProcess {
+  case class ParseError[R,C](parseError: R => Option[C with Throwable]) {
+    def apply[CC >: C](parseSuccess: R => C): ApiPostProcess[R, CC] = ApiPostProcess(parseError, parseSuccess)
+  }
+
   /**
    * Wraps error parser, to build complete postprocessor for concrete response later
    * @param parseError response reader for errors
@@ -47,9 +51,5 @@ object ApiPostProcess {
    * @tparam C API codomain
    * @return
    */
-  def apply[R, C](parseError: R => Option[C with Throwable]) = new {
-    def apply(resp: R) = parseError(resp)
-
-    def withSuccess[CC >: C](parseSuccess: R => CC) = ApiPostProcess(parseError, parseSuccess)
-  }
+  def apply[R, C](parseError: R => Option[C with Throwable]) = ParseError(parseError)
 }
