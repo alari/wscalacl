@@ -1,3 +1,5 @@
+organization := "com.github.alari"
+
 name := "ws-client"
 
 version := "0.1-SNAPSHOT"
