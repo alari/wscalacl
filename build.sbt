@@ -1,6 +1,6 @@
 organization := "com.github.alari"
 
-name := "ws-client"
+name := "wscalacl"
 
 version := "0.1-SNAPSHOT"
 
